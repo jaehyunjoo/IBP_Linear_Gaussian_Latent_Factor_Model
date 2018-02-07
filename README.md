@@ -14,7 +14,7 @@ This demo is based on a simulated data set consisting of 6x6 images in Griffiths
 
 Default setting: used 100 6x6 images with an upper bound of K = 6 via 1000 MCMC iterations. 
 
-Resuting outputs will be saved in a separate folder and visualized using [David Andrzejewski's code](https://github.com/davidandrzej/PyIBP) (Thanks!!).
+Resuting outputs will be saved in a separate folder and visualized using [David Andrzejewski's code](https://github.com/davidandrzej/PyIBP)(scaledimage.py) that mimics MATLAB imagesc() (Thanks!!).
 
 
 
