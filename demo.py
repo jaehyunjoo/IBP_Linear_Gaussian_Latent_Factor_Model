@@ -111,17 +111,6 @@ orig.set_size_inches(13, 3)
 orig.savefig('Original_Latent_Features.png')
 plt.close()
 
-# Save the posterior distribution of P(K | - )
-burnin = np.rint((chain*0.5))
-K_list = K_save[int(burnin+1):].astype(np.int)
-hist_bin = range(min(K_list), max(K_list)+1)
-hist_bin = np.asarray(hist_bin) - 0.5
-plt.hist(K_save, bins=hist_bin, normed=1, facecolor="green", alpha=0.3)
-plt.xlabel(r'$K^+$')
-plt.ylabel("Density")
-plt.savefig("Histogram_K")
-plt.close()
-
 # Save some of example figures from data X
 examples = X[0:4, :]
 (ex, sub) = plt.subplots(1, 4)
