@@ -1,4 +1,4 @@
-# A Linear-Gaussin Latent Factor (Feature) Model using an IBP prior
+# A Linear-Gaussian Latent Factor (Feature) Model using an IBP prior
 
 This Python code implements a linear-Gaussian latent factor model using an IBP (Indian buffet process) prior as illustrated in [Griffiths and Ghahramani (2011)](https://dl.acm.org/citation.cfm?id=2021039). 
 
