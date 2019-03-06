@@ -4,7 +4,7 @@ This Python code implements a linear-Gaussian latent factor model using an IBP (
 
 It uses a truncated IBP prior that has an upper bound of the number of latent features K. The real-valued latent feactures were implemented using a slice sampling based on [Neal (2003)](https://www.jstor.org/stable/3448413?seq=1#page_scan_tab_contents). 
 
-To test, run (with python2)
+To test, run
 
 ```python
 python demo.py
