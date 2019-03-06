@@ -2,8 +2,8 @@
 import numpy as np
 import numpy.random as nr
 
-from logPX import logPX
-from logPV import logPvi
+from . import logPX
+from . import logPV
 
 
 def sampleV(i, k, X, Z, A, sigma_x, N, D):
@@ -15,7 +15,7 @@ def sampleV(i, k, X, Z, A, sigma_x, N, D):
     # do not consider (z_ik = 1 | Z_-ik) because this prior value is same.
     # for the same reason, we don't have to consider P(A | sigma_a)
     # for the prior of feature weight, only consider value Z[i, k]
-    curlp = logPX(X, Z, A, sigma_x, N, D) + logPvi(curv)
+    curlp = logPX.logPX(X, Z, A, sigma_x, N, D) + logPV.logPvi(curv)
 
     # Vertically sample beneath this value
     # sample from uniform(0, exp(curlp)) = uniform(0, 1)*exp(curlp)
@@ -30,7 +30,7 @@ def sampleV(i, k, X, Z, A, sigma_x, N, D):
 
     newv = L + nr.uniform(0, 1)*(R-L)
     Z_new[i, k] = newv
-    newlp = logPX(X, Z_new, A, sigma_x, N, D) + logPvi(newv)
+    newlp = logPX.logPX(X, Z_new, A, sigma_x, N, D) + logPV.logPvi(newv)
 
     # Repeat until valid sample obtained
     # sample should be drawn from the slice
@@ -42,7 +42,7 @@ def sampleV(i, k, X, Z, A, sigma_x, N, D):
             R = newv
         newv = L + nr.uniform(0, 1)*(R-L)
         Z_new[i, k] = newv
-        newlp = logPX(X, Z_new, A, sigma_x, N, D) + logPvi(newv)
+        newlp = logPX.logPX(X, Z_new, A, sigma_x, N, D) + logPV.logPvi(newv)
     assert(L < newv < R)
     return newv
 
@@ -64,21 +64,21 @@ def Interval(i, k, curv, logy, X, Z, A, sigma_x, N, D):
     assert(not np.may_share_memory(Z, Z_tmp))
 
     Z_tmp[i, k] = L
-    Llp = logPX(X, Z_tmp, A, sigma_x, N, D) + logPvi(L)
+    Llp = logPX.logPX(X, Z_tmp, A, sigma_x, N, D) + logPV.logPvi(L)
 
     Z_tmp[i, k] = R
-    Rlp = logPX(X, Z_tmp, A, sigma_x, N, D) + logPvi(R)
+    Rlp = logPX.logPX(X, Z_tmp, A, sigma_x, N, D) + logPV.logPvi(R)
 
     # Stepping out
     while(J > 0 and logy < Llp):
         L -= w
         J -= 1
         Z_tmp[i, k] = L
-        Llp = logPX(X, Z_tmp, A, sigma_x, N, D) + logPvi(L)
+        Llp = logPX.logPX(X, Z_tmp, A, sigma_x, N, D) + logPV.logPvi(L)
 
     while(T > 0 and logy < Rlp):
         R += w
         T -= 1
         Z_tmp[i, k] = R
-        Rlp = logPX(X, Z_tmp, A, sigma_x, N, D) + logPvi(R)
+        Rlp = logPX.logPX(X, Z_tmp, A, sigma_x, N, D) + logPV.logPvi(R)
     return (L, R)
