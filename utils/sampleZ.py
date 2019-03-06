@@ -1,9 +1,9 @@
 """This module will update a binary feature matrix Z."""
 import numpy as np
 import numpy.random as nr
-from logPX import logPX
-from logPV import logPvi
-from sampleV import sampleV  # slice sampler
+from . import logPX
+from . import logPV
+from . import sampleV  # slice sampler
 
 
 def sampleZ(X, Z, A, sigma_x, sigma_a, alpha, K, N, D, realvaluedZ, proposeNewfeature):
@@ -32,7 +32,7 @@ def sampleZ(X, Z, A, sigma_x, sigma_a, alpha, K, N, D, realvaluedZ, proposeNewfe
 
             # Compute a log likelihood p(z_ik = 0 | Z_-(ik), X)
             Z[i, k] = 0
-            logp0 = logPX(X, Z, A, sigma_x, N, D)
+            logp0 = logPX.logPX(X, Z, A, sigma_x, N, D)
             assert(np.isfinite(logp0))
             logp0 += np.log(prior_z0[k])
             assert(np.isfinite(logp0))
@@ -45,7 +45,7 @@ def sampleZ(X, Z, A, sigma_x, sigma_a, alpha, K, N, D, realvaluedZ, proposeNewfe
                 else:
                     Z[i, k] = old_zik  # recycle the current value
 
-            logp1 = logPX(X, Z, A, sigma_x, N, D)
+            logp1 = logPX.logPX(X, Z, A, sigma_x, N, D)
             assert(np.isfinite(logp1))
             logp1 += np.log(prior_z1[k])
             assert(np.isfinite(logp1))
@@ -54,7 +54,7 @@ def sampleZ(X, Z, A, sigma_x, sigma_a, alpha, K, N, D, realvaluedZ, proposeNewfe
             # need only calculate single v because the rest weights are same
             # between z_ik = 0 and z_ik = 1
             if (realvaluedZ):
-                logp1 += logPvi(Z[i, k])
+                logp1 += logPV.logPvi(Z[i, k])
                 assert(np.isfinite(logp1))
 
             log_diff = logp1 - logp0
@@ -75,7 +75,7 @@ def sampleZ(X, Z, A, sigma_x, sigma_a, alpha, K, N, D, realvaluedZ, proposeNewfe
             else:
                 if (realvaluedZ):
                     # sample new v through a slice sampler
-                    Z[i, k] = sampleV(i, k, X, Z, A, sigma_x, N, D)
+                    Z[i, k] = sampleV.sampleV(i, k, X, Z, A, sigma_x, N, D)
                 else:
                     Z[i, k] = 1
 
