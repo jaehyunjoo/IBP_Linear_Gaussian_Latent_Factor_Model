@@ -70,9 +70,9 @@ trueWeights = np.vstack((f1, f2, f3, f4))
 # Generate noisy image data
 K = 4
 sig_x_true = 0.5
-A = np.vstack((f1, f2, f3, f4)).astype(np.float)
+A = np.vstack((f1, f2, f3, f4)).astype(float)
 
-Z_orig = nr.binomial(1, 0.5, (N, K)).astype(np.float)
+Z_orig = nr.binomial(1, 0.5, (N, K)).astype(float)
 V_orig = nr.normal(0, 1, size=(N, K))
 # V_orig = nr.exponential(1, size=(N, K))
 Z_orig = np.multiply(Z_orig, V_orig)
@@ -128,9 +128,9 @@ plt.close()
 
 # Show and save result
 lastZ = Z_save[:, :, chain]
-mcount = (lastZ != 0).astype(np.int).sum(axis=0)
+mcount = (lastZ != 0).astype(int).sum(axis=0)
 index = np.where(mcount > 0)
-lastK = K_save[chain].astype(np.int)
+lastK = K_save[chain].astype(int)
 lastA = A_save[index, :, chain]
 A = lastA.reshape(len(index[0]), D)
 

@@ -78,7 +78,7 @@ def IBPFM(iteration, upperbound_K, data, alpha, sigma_x, sigma_a, stdData=True,
         # Initialize Z
         if (initZ is None):
             Z = nr.binomial(1, 0.5, size=(N, K))
-            Z = Z.astype(np.float)
+            Z = Z.astype(float)
         else:
             Z = initZ
             # Initial Z should have a dimension (N, upperbound_K)
@@ -89,8 +89,8 @@ def IBPFM(iteration, upperbound_K, data, alpha, sigma_x, sigma_a, stdData=True,
 
             assert(Z.shape == (N, K))
             if not realvaluedZ:
-                Z = (Z != 0).astype(np.int)
-                Z = Z.astype(np.float)
+                Z = (Z != 0).astype(int)
+                Z = Z.astype(float)
 
         # Generate real value V when Z was provided as binary matrix
         # even if realvaluedZ V model was enabled
@@ -118,7 +118,7 @@ def IBPFM(iteration, upperbound_K, data, alpha, sigma_x, sigma_a, stdData=True,
                    sigma_xb, sigma_a, sigma_aa, sigma_ab)) > 0)
 
         # output containers for params
-        K_save = np.zeros(iteration + 1, dtype=np.int)
+        K_save = np.zeros(iteration + 1, dtype=int)
         alpha_save = np.zeros(iteration + 1)
         sigma_x_save = np.zeros(iteration + 1)
         sigma_a_save = np.zeros(iteration + 1)
@@ -188,7 +188,7 @@ def IBPFM(iteration, upperbound_K, data, alpha, sigma_x, sigma_a, stdData=True,
 
         # Store init params
         if (s == 0):
-            m = (Z != 0).astype(np.int).sum(axis=0)
+            m = (Z != 0).astype(int).sum(axis=0)
             K_real = len(m[m > 0])
 
             K_save[s] = K_real
@@ -248,7 +248,7 @@ def IBPFM(iteration, upperbound_K, data, alpha, sigma_x, sigma_a, stdData=True,
             alpha = sampleAlpha(alpha_a, alpha_b, K, N)
 
         # Latent feature count
-        mcount = (Z != 0).astype(np.int).sum(axis=0)
+        mcount = (Z != 0).astype(int).sum(axis=0)
         mcount_active = mcount[mcount > 0]
 
         # Store params

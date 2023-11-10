@@ -11,9 +11,9 @@ def sampleZ(X, Z, A, sigma_x, sigma_a, alpha, K, N, D, realvaluedZ, proposeNewfe
 
     for i in range(N):
         # Calculate m_-i,k
-        m = (Z != 0).astype(np.int).sum(axis=0)
+        m = (Z != 0).astype(int).sum(axis=0)
         assert(Z.shape[1] == len(m))
-        m_i = ((Z[i, :] != 0).astype(np.int))
+        m_i = ((Z[i, :] != 0).astype(int))
         m_neg_i = m - m_i
 
         # emulate IBP-FM using a finite model
